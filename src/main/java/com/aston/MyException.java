@@ -1,4 +1,4 @@
-package com.astonhomework;
+package com.aston;
 
 public class MyException extends Exception {
 
