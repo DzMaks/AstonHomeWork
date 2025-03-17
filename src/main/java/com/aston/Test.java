@@ -2,7 +2,7 @@ package com.astonhomework;
 
 public class Test {
 
-    public void ifLessZero (int a) throws MyException {
+    public void ifNegative (int a) throws MyException {
         if (a < 0) {
             throw new MyException();
         }
@@ -10,7 +10,7 @@ public class Test {
 
     public void catchingException (int a) {
         try {
-            ifLessZero(a);
+            ifNegative(a);
         } catch (MyException e) {
             System.out.println("Поймали наше исключение");
         }
