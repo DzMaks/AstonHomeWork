@@ -2,7 +2,7 @@ package com.aston.homework3;
 
 import java.util.Arrays;
 
-public class MyArrayList<T> {
+public class MyArrayList<T extends Comparable<T>> {
 
     private int capacity = 10;
     private Object[] array;
@@ -86,6 +86,55 @@ public class MyArrayList<T> {
             }
         }
         return arr.append("]").toString();
+    }
+
+    //Сортировка слиянием
+    private void mergeSort(int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(left, mid);
+            mergeSort(mid + 1, right);
+            mergeSort(left, mid, right);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void mergeSort(int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+        Object[] leftArray = new Object[n1];
+        Object[] rightArray = new Object[n2];
+        System.arraycopy(array, left, leftArray, 0, n1);
+        System.arraycopy(array, mid+1, rightArray, 0, n2);
+        int i = 0;
+        int j = 0;
+        int k = left;
+        while (i < n1 && j < n2) {
+            if (((T)leftArray[i]).compareTo((T)rightArray[j]) <= 0) {
+                array[k] = leftArray[i];
+                i++;
+            } else {
+                array[k] = rightArray[j];
+                j++;
+            }
+            k++;
+        }
+        while (i < n1) {
+            array[k] = leftArray[i];
+            i++;
+            k++;
+        }
+        while (j < n2) {
+            array[k] = rightArray[j];
+            j++;
+            k++;
+        }
+    }
+
+    public void mergeSort(){
+        if (size>1){
+            mergeSort(0, size - 1);
+        }
     }
 
     public int getCapacity() {

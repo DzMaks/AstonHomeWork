@@ -2,7 +2,7 @@ package com.aston.homework3;
 
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<E>{
+public class MyLinkedList<E extends  Comparable<E>>{
 
    private int size = 0;
    private Node<E> first;
@@ -137,6 +137,37 @@ public class MyLinkedList<E>{
     private void indexValidate(int index){
         if (index < 0 || index >= size){
             throw new IndexOutOfBoundsException();
+        }
+    }
+
+    //Быстаря сортировка
+    private void quickSort(Node<E> start, Node<E> end){
+        if (start != null && end != null && size > 1){
+            E pivotData = end.data;
+            Node<E> smallerElement = start;
+            for(Node<E> current = start; current != end; current = current.next){
+                if (current.data != null && current.data.compareTo(pivotData) < 0){
+                    E temp = smallerElement.data;
+                    smallerElement.data = current.data;
+                    current.data = temp;
+                    smallerElement = smallerElement.next;
+                }
+            }
+            E temp = smallerElement.data;
+            smallerElement.data = end.data;
+            end.data = temp;
+            if (smallerElement.prev != null && smallerElement != start){
+                quickSort(start, smallerElement.prev);
+            }
+            if (smallerElement.next != null && smallerElement != end){
+                quickSort(smallerElement.next, end);
+            }
+        }
+    }
+
+    public void quickSort(){
+        if (first != null && last != null && size > 1){
+            quickSort(first, last);
         }
     }
 
